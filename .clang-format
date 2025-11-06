@@ -1,0 +1,6 @@
+# .clang-format
+
+BasedOnStyle: LLVM
+BreakBeforeBraces: Allman
+AllowShortIfStatementsOnASingleLine: false 
+AllowShortFunctionsOnASingleLine: None 
