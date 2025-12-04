@@ -3,7 +3,7 @@
 > [!NOTES]
 > UNDER PROGRESS
 
-Flaggr is just a fun C application where i can print out pre defined flags by running the program with a script and a parameter passed to a certain function/flag/counrty.
+Flaggr is just a fun C application where i can print out pre defined flags with the help if the SDL2 library.
 
 ## About
 
