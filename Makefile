@@ -5,19 +5,16 @@ CC := gcc
 TARGET := flaggr
 
 # Directories
-SRC_DIR := src
-INC_DIR := include
 OBJ_DIR := obj
 
 # Source files
-SRCS := main.c $(wildcard $(SRC_DIR)/*.c)
+SRCS := main.c flaggr.c
 
 # Object files mapped into obj/
 OBJS := $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 # Flags
-CFLAGS := -Wall -Wextra -I$(INC_DIR)
-LIBS := `sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image
+CFLAGS := -Wall -Wextra
 
 # Default target
 $(TARGET): $(OBJS)

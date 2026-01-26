@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "SDL.h"
+#include "flaggr.h"
 
 int main (){
 
