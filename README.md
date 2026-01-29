@@ -3,23 +3,18 @@
 > [!NOTES]
 > UNDER PROGRESS
 
-Flaggr is just a fun C application where i can print out pre defined flags with the help if the SDL2 library.
+Flaggr is just a fun C application where i can print out pre defined flags using bitmaps.
 
 ## About
 
-This project will help develop my understanding for bits and how they are localized.
-Also implementation of different tools, linters, scripts and what not to try and "create" a smaller bigger project.  
-I will try and develop several flags as bitmaps and print them out in pretty colors.  
+This project will help develop my understanding for bits and how they behave.
+I will try and develop several flags as bitmaps and print them out.  
 
 ## Installation
 
-INCOMING
+Installed with make, no extra libraries needed. 
 
 ## Usage
 
 Study it, use it, examine it, decline it or do whatever.  
 I am doing this because i want to expand my knowledge and eventually create something more real.
-
-## Testing
-
-INCOMING (if needed)

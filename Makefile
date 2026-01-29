@@ -10,6 +10,8 @@ OBJ_DIR := obj
 # Source files
 SRCS := main.c flaggr.c
 
+LIBS := -lSDL2
+
 # Object files mapped into obj/
 OBJS := $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
 
