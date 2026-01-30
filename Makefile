@@ -13,6 +13,8 @@ SRCS := main.c flaggr.c
 # Object files mapped into obj/
 OBJS := $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
 
+LIBS := -lSDL2
+
 # Flags
 CFLAGS := -Wall -Wextra
 
