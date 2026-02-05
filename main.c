@@ -2,27 +2,39 @@
 #include <stdio.h>
 
 int main(void) {
-    App app = {0};
+    App App = {0};
+    
+    SDL_Event event;
+    
+    void (*flag_arr[])(SDL_Renderer*) = {
+        Sweden, Norway, Denmark,
+        Finland, Iceland, FaroeIslands
+    };
 
-    if (!init(&app, "flaggr", WINDOW_WIDTH, WINDOW_HEIGHT))
+    size_t len = sizeof(flag_arr);
+    size_t index = 0;
+    
+    if (!init(&App, "flaggr", WINDOW_WIDTH, WINDOW_HEIGHT))
         return 1;
 
-    int running = 1;
-    SDL_Event event;
-
-    while (running) {
+    while (index <= len) {
         while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT)
-                running = 0;
+            switch (event.type){
+                case SDL_QUIT:
+                    index = len;
+                break;
+            }
         }
-        sweden(app.renderer);
-        SDL_Delay(2000);
-        finland(app.renderer);
-        SDL_Delay(2000);
+
+        flag_arr[index](App.renderer);
+
+        SDL_Delay(DELAY);
+
+        ++index;
     }
 
     printf("Bye bye!\n");
-    destroy(&app);
+    destroy(&App);
 
     return 0;
 }
