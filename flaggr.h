@@ -1,56 +1,83 @@
 #ifndef FLAGGR_H
 #define FLAGGR_H
 
-#include <stdio.h>
+#include <stdint.h>
+#include <SDL2/SDL.h>
 
-#define COLS 120
-#define ROWS 40
+static const uint16_t WINDOW_WIDTH = 1080;
+static const uint16_t WINDOW_HEIGHT = 640;
 
-#define COUNT_OF(x) ((sizeof(x)/sizeof(0[x])) / ((size_t)(!(sizeof(x) % sizeof(0[x])))))
+typedef struct {
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+}App;
 
-// ASCII colors
-#define RESET      "\033[0m"
-#define GREY       "\033[48;5;102m"
-#define BLUE       "\033[48;5;20m" 
-#define WHITE      "\033[48;5;255m"
-#define RED        "\033[48;5;196m"
-#define GREEN      "\033[48;5;82m"
-#define YELLOW     "\033[48;5;226m"
-#define ORANGE     "\033[48;5;208m"
-#define PURPLE     "\033[48;5;129m"
-#define CYAN       "\033[48;5;51m"
+// SET COLORS
+typedef struct{
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+}Color;
 
-// Enums for ASCII colors
 typedef enum {
-    DRAW_GREEN,
-    DRAW_WHITE,
-    DRAW_RED,
-    DRAW_BLACK,
-    DRAW_YELLOW,
-    DRAW_BLUE,
-    DRAW_ORANGE,
-    DRAW_PURPLE,
-    DRAW_CYAN,
-    DRAW_GREY
-} Color;
+    WHITE,
+    BLACK,
+    RED,
+    DARK_RED,
+    LIGHT_RED,
+    BLUE,
+    DARK_BLUE,
+    LIGHT_BLUE,
+    GREEN,
+    DARK_GREEN,
+    LIGHT_GREEN,
+    YELLOW,
+    GOLD,
+    DARK_YELLOW,
+    ORANGE,
+    PURPLE,
+    BROWN,
+    CYAN
+} ColorId;
 
-typedef struct {
-    int x;
-    int y;
-    int z;
-} Border; 
+typedef struct{
+    uint16_t w, h;      // Specs of Flag
+    uint16_t x, y;      // Cursor of Flag
+    size_t amount;      // Amount of colors in Flag
+    ColorId *primary;    // Dynamic per flag
+    ColorId background;
+}Flag;
 
-// Flag structure
-typedef struct {
-    Color pixels[ROWS][COLS];
-} FlagBuffer;
+static const Color TABLE[] = {
+    [WHITE]         = { 255, 255, 255 },
+    [BLACK]         = {   0,   0,   0 },
+    [RED]           = { 206,  17,  38 },
+    [DARK_RED]      = { 170,   0,   0 },
+    [LIGHT_RED]     = { 239,  51,  64 },
+    [BLUE]          = {   0, 106, 167 },
+    [DARK_BLUE]     = {   0,  40, 104 },
+    [LIGHT_BLUE]    = {  65, 143, 222 },
+    [GREEN]         = {   0, 122,  61 },
+    [DARK_GREEN]    = {   0, 100,   0 },
+    [LIGHT_GREEN]   = {  60, 179, 113 },
+    [YELLOW]        = { 254, 204,   0 },
+    [GOLD]          = { 255, 215,   0 },
+    [DARK_YELLOW]   = { 218, 165,  32 },
+    [ORANGE]        = { 255, 140,   0 }, 
+    [PURPLE]        = { 102,  45, 145 },
+    [BROWN]         = { 139,  69,  19 }, 
+    [CYAN]          = {   0, 188, 212 }
+};
 
-void render(const FlagBuffer *flag);
+// Logic
+int init(App *app, const char *title, int w, int h);
+void destroy(App *app);
+void set_flag_color(SDL_Renderer *r, ColorId id);
+void set_bg_color(SDL_Renderer *r, ColorId id);
 
-// Different flags
-void germany(FlagBuffer *flag);
-void japan(FlagBuffer *flag);
-void italy(FlagBuffer *flag);
-void france(FlagBuffer *flag);
+// Flag prints
+void sweden(SDL_Renderer *renderer);
+void finland(SDL_Renderer *renderer);
+
 
 #endif
