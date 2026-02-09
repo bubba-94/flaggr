@@ -2,23 +2,24 @@
 #define FLAGGRTYPES_H
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdint.h>
 
 static const uint16_t WINDOW_WIDTH = 1080;
 static const uint16_t WINDOW_HEIGHT = 640;
-static const uint8_t DELAY = 500;
+static const uint16_t DELAY_MS = 500;
 
 typedef struct {
     SDL_Window* window;
     SDL_Renderer* renderer;
+    
 }App;
 
-// SET COLORS
 typedef struct{
     uint8_t r;
     uint8_t g;
     uint8_t b;
-}Color;
+}Color; 
 
 typedef enum {
     WHITE,
@@ -42,6 +43,7 @@ typedef enum {
 } ColorId;
 
 typedef struct{
+    const char* title;
     uint16_t w, h;      // Specs of Flag
     uint16_t x, y;      // Cursor of Flag
     size_t amount;      // Amount of colors in Flag

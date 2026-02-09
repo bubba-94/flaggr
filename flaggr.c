@@ -1,8 +1,14 @@
 #include "flaggr.h"
+
+static const uint16_t TEXT_WIDTH = 500;
+static const uint16_t TEXT_HEIGHT = 150;
+static const uint16_t TEXT_X = (WINDOW_WIDTH / 2 )- (TEXT_WIDTH / 2);
+static const uint16_t TEXT_Y = WINDOW_HEIGHT / 2 - 300;
+
 void Sweden(SDL_Renderer *renderer){
     ColorId colors[] = {BLUE,YELLOW};
 
-    Flag *Sweden = flag(colors, 2);
+    Flag *Sweden = flag("Sweden", colors, 2);
     if(!Sweden) return;
 
     draw_nordic(Sweden, renderer);
@@ -15,7 +21,7 @@ void Sweden(SDL_Renderer *renderer){
 void Norway(SDL_Renderer *renderer){
     ColorId colors[] = {RED, WHITE, BLUE};
 
-    Flag *Norway = flag(colors, 3);
+    Flag *Norway = flag("Norway", colors, 3);
     if(!Norway) return;
 
     draw_nordic(Norway, renderer);
@@ -28,7 +34,7 @@ void Norway(SDL_Renderer *renderer){
 void Iceland(SDL_Renderer *renderer){
     ColorId colors[] = {BLUE, WHITE, RED};
 
-    Flag *Iceland = flag(colors, 3);
+    Flag *Iceland = flag("Iceland", colors, 3);
     if(!Iceland) return;
 
     draw_nordic(Iceland, renderer);
@@ -41,7 +47,7 @@ void Iceland(SDL_Renderer *renderer){
 void FaroeIslands(SDL_Renderer *renderer){
     ColorId colors[] = {WHITE, BLUE, RED};
 
-    Flag *FaroeIslands = flag(colors, 3);
+    Flag *FaroeIslands = flag("Faroe Islands", colors, 3);
     if(!FaroeIslands) return;
 
     draw_nordic(FaroeIslands, renderer);
@@ -54,7 +60,7 @@ void FaroeIslands(SDL_Renderer *renderer){
 void Denmark(SDL_Renderer *renderer){
     ColorId colors[] = {RED, WHITE};
 
-    Flag *Denmark = flag(colors, 2);
+    Flag *Denmark = flag("Denmark", colors, 2);
     if(!Denmark) return;
 
     draw_nordic(Denmark, renderer);
@@ -68,14 +74,50 @@ void Finland(SDL_Renderer *renderer){
     
     ColorId colors[] = {WHITE,BLUE};
 
-    Flag *Finland = flag(colors, 2);
+    Flag *Finland = flag("Finland", colors, 2);
     if(!Finland) return;
 
+    render_title(Finland, renderer);
+
     draw_nordic(Finland, renderer);
-    
+
     SDL_RenderPresent(renderer);
 
     destroy_flag(Finland);
+}
+
+void render_title(Flag *f, SDL_Renderer *renderer){
+
+    TTF_Font *font = TTF_OpenFont("Lato-Light.ttf", 400);
+
+    if (!font){
+        printf("Font error: %s\n", SDL_GetError());
+        TTF_CloseFont(font);
+    }
+
+      // Create surface with rendered text
+    SDL_Color textColor = {255, 255, 255, 255};
+    SDL_Surface *textSurface = TTF_RenderUTF8_Solid(font, f->title, textColor);
+
+    if (!textSurface) {
+        printf("Failed to create text surface: %s\n", TTF_GetError());
+    }
+
+    // Create texture from surface
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+
+    if (!texture){
+        printf("Failed to create text texture: %s\n", SDL_GetError());
+    }
+
+    uint16_t textWidth = get_text_width(f->title);
+
+    // Render text
+    SDL_Rect textRect = {TEXT_X, TEXT_Y, textWidth, TEXT_HEIGHT};
+
+    SDL_RenderCopy(renderer, texture, NULL, &textRect);
+
+  
 }
 
 void draw_nordic(const Flag *f, SDL_Renderer *r){
@@ -139,10 +181,11 @@ void draw_nordic(const Flag *f, SDL_Renderer *r){
     
 }
 
-Flag* flag(ColorId* c, int n){
+Flag* flag(const char* title, ColorId* c, int n){
     Flag *f = malloc(sizeof *f);
     if (!f) return NULL;
 
+    f->title = title;
     f->h = 300;
     f->w = f->h * 2; // see next section
     f->x = (WINDOW_WIDTH  - f->w) / 2;
@@ -180,6 +223,11 @@ int init(App *app, const char *title, int w, int h) {
         return 0;
     }
 
+    if (TTF_Init() < 0){
+        printf("SDL_TTF error: %s\n", SDL_GetError());
+        return 0;
+    }
+
     app->window = SDL_CreateWindow(
         title,
         SDL_WINDOWPOS_CENTERED,
@@ -190,7 +238,7 @@ int init(App *app, const char *title, int w, int h) {
 
     if (!app->window) {
         printf("Window error: %s\n", SDL_GetError());
-        SDL_Quit();
+        destroy(app);
         return 0;
     }
 
@@ -202,17 +250,22 @@ int init(App *app, const char *title, int w, int h) {
 
     if (!app->renderer) {
         printf("Renderer error: %s\n", SDL_GetError());
-        SDL_DestroyWindow(app->window);
-        SDL_Quit();
+        destroy(app);
         return 0;
     }
 
     return 1;
 }
 
+int get_text_width(const char *title){
+
+}
+
 void destroy(App *app) {
     if (app->renderer)
         SDL_DestroyRenderer(app->renderer);
+
+    TTF_Quit();
 
     if (app->window)
         SDL_DestroyWindow(app->window);

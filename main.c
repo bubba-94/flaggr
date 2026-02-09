@@ -6,7 +6,7 @@ int main(void) {
     
     SDL_Event event;
     
-    void (*flag_arr[])(SDL_Renderer*) = {
+    void (*flag_arr[])(SDL_Renderer* renderer) = {
         Sweden, Norway, Denmark,
         Finland, Iceland, FaroeIslands
     };
@@ -17,7 +17,7 @@ int main(void) {
     if (!init(&App, "flaggr", WINDOW_WIDTH, WINDOW_HEIGHT))
         return 1;
 
-    while (index <= len) {
+    while (index <= len - 1) {
         while (SDL_PollEvent(&event)) {
             switch (event.type){
                 case SDL_QUIT:
@@ -28,7 +28,7 @@ int main(void) {
 
         flag_arr[index](App.renderer);
 
-        SDL_Delay(DELAY);
+        SDL_Delay(DELAY_MS);
 
         ++index;
     }
