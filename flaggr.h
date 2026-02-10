@@ -25,10 +25,12 @@ void destroy_flag(Flag *f);
 
 void set_color(SDL_Renderer *r, ColorId id);
 void render_title(Flag *f, SDL_Renderer *renderer);
+void clear(SDL_Renderer *r);
 
 // Adjustments
 
-int get_text_width(const char *title){}
+uint16_t get_text_width(const char *title);
+uint16_t get_text_x(const char *title);
 
 // Application
 

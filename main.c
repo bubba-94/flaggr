@@ -11,13 +11,13 @@ int main(void) {
         Finland, Iceland, FaroeIslands
     };
 
-    size_t len = sizeof(flag_arr);
+    size_t len = sizeof(flag_arr) / sizeof(flag_arr[0]);
     size_t index = 0;
     
     if (!init(&App, "flaggr", WINDOW_WIDTH, WINDOW_HEIGHT))
         return 1;
 
-    while (index <= len - 1) {
+    while (index < len) {
         while (SDL_PollEvent(&event)) {
             switch (event.type){
                 case SDL_QUIT:

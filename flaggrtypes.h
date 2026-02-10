@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <stdint.h>
+#include <string.h>
 
 static const uint16_t WINDOW_WIDTH = 1080;
 static const uint16_t WINDOW_HEIGHT = 640;
@@ -20,6 +21,13 @@ typedef struct{
     uint8_t g;
     uint8_t b;
 }Color; 
+
+typedef struct{
+    uint16_t w;
+    uint16_t x;
+    const uint16_t HEIGHT;
+    const uint16_t Y_POS;
+}TextLayout;
 
 typedef enum {
     WHITE,

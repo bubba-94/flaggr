@@ -1,15 +1,23 @@
 #include "flaggr.h"
 
-static const uint16_t TEXT_WIDTH = 500;
-static const uint16_t TEXT_HEIGHT = 150;
-static const uint16_t TEXT_X = (WINDOW_WIDTH / 2 )- (TEXT_WIDTH / 2);
-static const uint16_t TEXT_Y = WINDOW_HEIGHT / 2 - 300;
+static TextLayout text = {
+    .w = 0,
+    .x = 0,
+    .HEIGHT = 150,
+    .Y_POS = (WINDOW_HEIGHT / 2) - (WINDOW_HEIGHT / 2)
+};
+
+static const int CHAR_WIDTH = 50;
+static const int CHAR_PADDING = 10;
 
 void Sweden(SDL_Renderer *renderer){
+    clear(renderer);
     ColorId colors[] = {BLUE,YELLOW};
 
     Flag *Sweden = flag("Sweden", colors, 2);
     if(!Sweden) return;
+
+    render_title(Sweden, renderer);
 
     draw_nordic(Sweden, renderer);
     
@@ -19,10 +27,13 @@ void Sweden(SDL_Renderer *renderer){
 }
 
 void Norway(SDL_Renderer *renderer){
+    clear(renderer);
     ColorId colors[] = {RED, WHITE, BLUE};
 
     Flag *Norway = flag("Norway", colors, 3);
     if(!Norway) return;
+
+    render_title(Norway, renderer);
 
     draw_nordic(Norway, renderer);
     
@@ -32,10 +43,13 @@ void Norway(SDL_Renderer *renderer){
 }
 
 void Iceland(SDL_Renderer *renderer){
+    clear(renderer);
     ColorId colors[] = {BLUE, WHITE, RED};
 
     Flag *Iceland = flag("Iceland", colors, 3);
     if(!Iceland) return;
+
+    render_title(Iceland, renderer);
 
     draw_nordic(Iceland, renderer);
     
@@ -45,10 +59,13 @@ void Iceland(SDL_Renderer *renderer){
 }
 
 void FaroeIslands(SDL_Renderer *renderer){
+    clear(renderer);
     ColorId colors[] = {WHITE, BLUE, RED};
 
     Flag *FaroeIslands = flag("Faroe Islands", colors, 3);
     if(!FaroeIslands) return;
+
+    render_title(FaroeIslands, renderer);
 
     draw_nordic(FaroeIslands, renderer);
     
@@ -58,10 +75,13 @@ void FaroeIslands(SDL_Renderer *renderer){
 }
 
 void Denmark(SDL_Renderer *renderer){
+    clear(renderer);
     ColorId colors[] = {RED, WHITE};
 
     Flag *Denmark = flag("Denmark", colors, 2);
     if(!Denmark) return;
+
+    render_title(Denmark, renderer);
 
     draw_nordic(Denmark, renderer);
     
@@ -71,7 +91,7 @@ void Denmark(SDL_Renderer *renderer){
 }
 
 void Finland(SDL_Renderer *renderer){
-    
+    clear(renderer);
     ColorId colors[] = {WHITE,BLUE};
 
     Flag *Finland = flag("Finland", colors, 2);
@@ -84,6 +104,7 @@ void Finland(SDL_Renderer *renderer){
     SDL_RenderPresent(renderer);
 
     destroy_flag(Finland);
+
 }
 
 void render_title(Flag *f, SDL_Renderer *renderer){
@@ -110,14 +131,32 @@ void render_title(Flag *f, SDL_Renderer *renderer){
         printf("Failed to create text texture: %s\n", SDL_GetError());
     }
 
-    uint16_t textWidth = get_text_width(f->title);
+    text.w = get_text_width(f->title);
+    text.x = get_text_x(f->title);
 
     // Render text
-    SDL_Rect textRect = {TEXT_X, TEXT_Y, textWidth, TEXT_HEIGHT};
+    SDL_Rect textRect = {text.x, text.Y_POS, text.w, text.HEIGHT};
 
     SDL_RenderCopy(renderer, texture, NULL, &textRect);
-
   
+}
+
+uint16_t get_text_x(const char *title){
+    int textWidth = get_text_width(title);
+    return (WINDOW_WIDTH - textWidth) / 2;
+}
+
+uint16_t get_text_width(const char *title){
+    int len = strlen(title);
+
+    if (len == 0) return 0;
+
+    return (len * CHAR_WIDTH) + ((len - 1) * CHAR_PADDING);
+}
+
+void clear(SDL_Renderer *r){
+    SDL_SetRenderDrawColor(r, 0,0,0, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(r);
 }
 
 void draw_nordic(const Flag *f, SDL_Renderer *r){
@@ -187,7 +226,7 @@ Flag* flag(const char* title, ColorId* c, int n){
 
     f->title = title;
     f->h = 300;
-    f->w = f->h * 2; // see next section
+    f->w = f->h * 2; 
     f->x = (WINDOW_WIDTH  - f->w) / 2;
     f->y = (WINDOW_HEIGHT - f->h) / 2;
     f->amount = n;
@@ -207,6 +246,7 @@ Flag* flag(const char* title, ColorId* c, int n){
 void destroy_flag(Flag *f){
     if(!f) return;
 
+    // Free colors first
     free(f->primary);
     free(f);
 }
@@ -255,10 +295,6 @@ int init(App *app, const char *title, int w, int h) {
     }
 
     return 1;
-}
-
-int get_text_width(const char *title){
-
 }
 
 void destroy(App *app) {
