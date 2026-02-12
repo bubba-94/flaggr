@@ -1,15 +1,5 @@
 #include "flaggr.h"
 
-static TextLayout text = {
-    .w = 0,
-    .x = 0,
-    .HEIGHT = 150,
-    .Y_POS = (WINDOW_HEIGHT / 2) - (WINDOW_HEIGHT / 2)
-};
-
-static const int CHAR_WIDTH = 50;
-static const int CHAR_PADDING = 10;
-
 void Sweden(SDL_Renderer *renderer){
     clear(renderer);
     ColorId colors[] = {BLUE,YELLOW};
@@ -109,6 +99,13 @@ void Finland(SDL_Renderer *renderer){
 
 void render_title(Flag *f, SDL_Renderer *renderer){
 
+    static TextLayout text = {
+        .w = 0,
+        .x = 0,
+        .HEIGHT = 150,
+        .Y_POS = (WINDOW_HEIGHT / 2) - (WINDOW_HEIGHT / 2)
+    };
+
     TTF_Font *font = TTF_OpenFont("Lato-Light.ttf", 400);
 
     if (!font){
@@ -147,6 +144,8 @@ uint16_t get_text_x(const char *title){
 }
 
 uint16_t get_text_width(const char *title){
+    static const int CHAR_WIDTH = 50;
+    static const int CHAR_PADDING = 10;
     int len = strlen(title);
 
     if (len == 0) return 0;
