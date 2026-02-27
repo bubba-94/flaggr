@@ -5,32 +5,14 @@ int main(void) {
     App App = {0};
     
     SDL_Event event;
+
+    size_t len = sizeof(FLAGS) / sizeof(FLAGS[0]);
     
-    void (*flag_arr[])(SDL_Renderer* renderer) = {
-        Sweden, Norway, Denmark,
-        Finland, Iceland, FaroeIslands
-    };
-
-    size_t len = sizeof(flag_arr) / sizeof(flag_arr[0]);
-    size_t index = 0;
+    if (!init(&App, "flaggr", WINDOW_WIDTH, WINDOW_HEIGHT)) return 1;
     
-    if (!init(&App, "flaggr", WINDOW_WIDTH, WINDOW_HEIGHT))
-        return 1;
-
-    while (index < len) {
-        while (SDL_PollEvent(&event)) {
-            switch (event.type){
-                case SDL_QUIT:
-                    destroy(&App);
-                break;
-            }
-        }
-
-        flag_arr[index](App.renderer);
-
+    for(size_t index = 0; index < len; ++index){
+        render(App.renderer, &FLAGS[index]);
         SDL_Delay(DELAY_MS);
-
-        ++index;
     }
 
     printf("Bye bye!\n");

@@ -1,98 +1,106 @@
 #include "flaggr.h"
 
-void Sweden(SDL_Renderer *renderer){
+void render(SDL_Renderer* renderer, const FlagSpec* f){
     clear(renderer);
-    ColorId colors[] = {BLUE,YELLOW};
+    render_title(f->title, renderer);
+    create_nordic_flag(f, renderer);
+    SDL_RenderPresent(renderer);
+}
 
-    Flag *Sweden = flag("Sweden", colors, 2);
-    if(!Sweden) return;
 
-    render_title(Sweden, renderer);
+// void Sweden(SDL_Renderer *renderer){
+//     clear(renderer);
+//     ColorId colors[] = {BLUE,YELLOW};
 
-    draw_nordic(Sweden, renderer);
+//     Flag *Sweden = flag("Sweden", colors, 2);
+//     if(!Sweden) return;
+
+//     render_title(Sweden, renderer);
+
+//     draw_nordic(Sweden, renderer);
     
-    SDL_RenderPresent(renderer);
+//     SDL_RenderPresent(renderer);
 
-    destroy_flag(Sweden);
-}
+//     destroy_flag(Sweden);
+// }
 
-void Norway(SDL_Renderer *renderer){
-    clear(renderer);
-    ColorId colors[] = {RED, WHITE, BLUE};
+// void Norway(SDL_Renderer *renderer){
+//     clear(renderer);
+//     ColorId colors[] = {RED, WHITE, BLUE};
 
-    Flag *Norway = flag("Norway", colors, 3);
-    if(!Norway) return;
+//     Flag *Norway = flag("Norway", colors, 3);
+//     if(!Norway) return;
 
-    render_title(Norway, renderer);
+//     render_title(Norway, renderer);
 
-    draw_nordic(Norway, renderer);
+//     draw_nordic(Norway, renderer);
     
-    SDL_RenderPresent(renderer);
+//     SDL_RenderPresent(renderer);
 
-    destroy_flag(Norway);
-}
+//     destroy_flag(Norway);
+// }
 
-void Iceland(SDL_Renderer *renderer){
-    clear(renderer);
-    ColorId colors[] = {BLUE, WHITE, RED};
+// void Iceland(SDL_Renderer *renderer){
+//     clear(renderer);
+//     ColorId colors[] = {BLUE, WHITE, RED};
 
-    Flag *Iceland = flag("Iceland", colors, 3);
-    if(!Iceland) return;
+//     Flag *Iceland = flag("Iceland", colors, 3);
+//     if(!Iceland) return;
 
-    render_title(Iceland, renderer);
+//     render_title(Iceland, renderer);
 
-    draw_nordic(Iceland, renderer);
+//     draw_nordic(Iceland, renderer);
     
-    SDL_RenderPresent(renderer);
+//     SDL_RenderPresent(renderer);
 
-    destroy_flag(Iceland);
-}
+//     destroy_flag(Iceland);
+// }
 
-void FaroeIslands(SDL_Renderer *renderer){
-    clear(renderer);
-    ColorId colors[] = {WHITE, BLUE, RED};
+// void FaroeIslands(SDL_Renderer *renderer){
+//     clear(renderer);
+//     ColorId colors[] = {WHITE, BLUE, RED};
 
-    Flag *FaroeIslands = flag("Faroe Islands", colors, 3);
-    if(!FaroeIslands) return;
+//     Flag *FaroeIslands = flag("Faroe Islands", colors, 3);
+//     if(!FaroeIslands) return;
 
-    render_title(FaroeIslands, renderer);
+//     render_title(FaroeIslands, renderer);
 
-    draw_nordic(FaroeIslands, renderer);
+//     draw_nordic(FaroeIslands, renderer);
     
-    SDL_RenderPresent(renderer);
+//     SDL_RenderPresent(renderer);
 
-    destroy_flag(FaroeIslands);
-}
+//     destroy_flag(FaroeIslands);
+// }
 
-void Denmark(SDL_Renderer *renderer){
-    clear(renderer);
-    ColorId colors[] = {RED, WHITE};
+// void Denmark(SDL_Renderer *renderer){
+//     clear(renderer);
+//     ColorId colors[] = {RED, WHITE};
 
-    Flag *Denmark = flag("Denmark", colors, 2);
-    if(!Denmark) return;
+//     Flag *Denmark = flag("Denmark", colors, 2);
+//     if(!Denmark) return;
 
-    render_title(Denmark, renderer);
+//     render_title(Denmark, renderer);
 
-    draw_nordic(Denmark, renderer);
+//     draw_nordic(Denmark, renderer);
     
-    SDL_RenderPresent(renderer);
+//     SDL_RenderPresent(renderer);
 
-    destroy_flag(Denmark);
-}
+//     destroy_flag(Denmark);
+// }
 
-void Finland(SDL_Renderer *renderer){
-    clear(renderer);
-    ColorId colors[] = {WHITE,BLUE};
+// void Finland(SDL_Renderer *renderer){
+//     clear(renderer);
+//     ColorId colors[] = {WHITE,BLUE};
 
-    Flag *Finland = flag("Finland", colors, 2);
-    if(!Finland) return;
+//     Flag *Finland = flag("Finland", colors, 2);
+//     if(!Finland) return;
 
-    render_title(Finland, renderer);
+//     render_title(Finland, renderer);
 
-    draw_nordic(Finland, renderer);
+//     draw_nordic(Finland, renderer);
 
-    SDL_RenderPresent(renderer);
+//     SDL_RenderPresent(renderer);
 
-    destroy_flag(Finland);
+//     destroy_flag(Finland);
 
-}
+// }

@@ -3,28 +3,25 @@
 
 #include "flaggrtypes.h"
 
-// Actual flags
+static const FlagSpec FLAGS[] = {
+        {"Sweden", 2, {BLUE, YELLOW}},
+        {"Norway", 3, {RED, WHITE, BLUE}},
+        {"Denmark", 2,{RED, WHITE}},
+        {"Finland", 2,{WHITE, BLUE}},
+        {"Iceland", 3,{BLUE, WHITE, RED}},
+        {"Faroe Islands", 3, {WHITE, RED, BLUE}}
+    };
 
-void Sweden(SDL_Renderer *renderer);
-void Norway(SDL_Renderer *renderer);
-void Denmark(SDL_Renderer *renderer);
-void Finland(SDL_Renderer *renderer);
-void Iceland(SDL_Renderer *renderer);
-void FaroeIslands(SDL_Renderer *renderer);
+void render(SDL_Renderer* r, const FlagSpec* f);
 
 // General flag outlines
 
-void draw_nordic(const Flag* f, SDL_Renderer *r);
-
-// Logic
-
-Flag* flag(const char* title, ColorId* c, int n);
-void destroy_flag(Flag *f);
+void create_nordic_flag(const FlagSpec* f, SDL_Renderer *r);
 
 // Coloring
 
 void set_color(SDL_Renderer *r, ColorId id);
-void render_title(Flag *f, SDL_Renderer *renderer);
+void render_title(const char* title, SDL_Renderer *renderer);
 void clear(SDL_Renderer *r);
 
 // Adjustments

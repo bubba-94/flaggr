@@ -59,6 +59,12 @@ typedef struct{
     ColorId background;
 }Flag;
 
+typedef struct{
+    const char* title;
+    size_t amount;
+    ColorId colors[10];
+}FlagSpec;
+
 static const Color TABLE[] = {
     [WHITE]         = { 255, 255, 255 },
     [BLACK]         = {   0,   0,   0 },
