@@ -72,4 +72,5 @@ CMakeUserPresets.json
 .venv
 venv/
 
+obj/
 flaggr

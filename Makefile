@@ -8,7 +8,7 @@ TARGET := flaggr
 OBJ_DIR := obj
 
 # Source files
-SRCS := main.c flags.c logic.c
+SRCS := main.c flaggr.c
 
 # Object files mapped into obj/
 OBJS := $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))

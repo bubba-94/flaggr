@@ -50,18 +50,18 @@ typedef enum {
     CYAN
 } ColorId;
 
-typedef struct{
-    const char* title;
-    uint16_t w, h;      // Specs of Flag
-    uint16_t x, y;      // Cursor of Flag
-    size_t amount;      // Amount of colors in Flag
-    ColorId *primary;    // Dynamic per flag
-    ColorId background;
-}Flag;
+typedef enum{
+    FLAG_NORDIC,
+    FLAG_HORIZONTAL,
+    FLAG_TRICOLOR_VERTICAL,
+    FLAG_CENTER_CROSS,
+    FLAG_CIRCLE
+}FlagType;
 
 typedef struct{
     const char* title;
     size_t amount;
+    FlagType type;
     ColorId colors[10];
 }FlagSpec;
 
