@@ -3,8 +3,19 @@
 
 int main(void) {
     App App = {0};
-    
-    SDL_Event event;
+
+    int running = 1;
+
+    /*
+
+    Allow the user to cycle through all flags at runtime
+
+    Handle SDL events (keyboard, quit)
+
+    Render the currently selected flag using your unified draw_flag() function
+
+    Keep code clean and scalable
+    */
 
     // Add flags to this array
     static const FlagSpec FLAGS[] = {
@@ -27,14 +38,50 @@ int main(void) {
     
     if (!init(&App, "flaggr", WINDOW_WIDTH, WINDOW_HEIGHT)) return 1;
     
-    for(size_t index = 0; index < len; ++index){
-        clear(App.renderer);
-        render(App.renderer, &FLAGS[index]);
+    size_t index = 0;
+    
+
+    while (running){
+
+        // Register event
+        SDL_Event event;
+
+        while (SDL_PollEvent(&event) || index != len){
+            clear(App.renderer);
+            switch(event.type){
+                case SDL_QUIT: return 1;
+                case SDL_KEYDOWN:
+                    if (event.key.keysym.sym == SDLK_RIGHT){
+                        // If right most go bottom index
+                        if (index == len){
+                                index = 0;
+                            }
+                            if (index < len){
+                                ++index;
+                            }
+                            else break;
+                    }
+
+                    if (event.key.keysym.sym == SDLK_LEFT){
+                        // If left most go to top index
+                        if (index == 0){
+                            index = len;
+                        }
+                        if (index > 0){
+                            --index;
+                        }
+                        else break;
+                    }
+                 break;
+            }
+
+            render(App.renderer, &FLAGS[index]);
+        }
+    
         SDL_RenderPresent(App.renderer);
-        SDL_Delay(DELAY_MS);
     }
 
-    printf("Bye bye!\n");
+    printf("Leaving FLAGGRRR!\n");
     destroy(&App);
 
     return 0;
