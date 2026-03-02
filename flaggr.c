@@ -1,21 +1,10 @@
 #include "flaggr.h"
 
-// Add flags to this array
-static const FlagSpec FLAGS[] = {
-    {"Sweden"       , 2, FLAG_NORDIC, {BLUE, YELLOW}},
-    {"Norway"       , 3, FLAG_NORDIC, {RED, WHITE, BLUE}},
-    {"Denmark"      , 2, FLAG_NORDIC, {RED, WHITE}},
-    {"Finland"      , 2, FLAG_NORDIC, {WHITE, BLUE}},
-    {"Iceland"      , 3, FLAG_NORDIC, {BLUE, WHITE, RED}},
-    {"Faroe Islands", 3, FLAG_NORDIC, {WHITE, RED, BLUE}},
-    {"Germany"      , 3, FLAG_HORIZONTAL, {BLACK, RED, YELLOW}}
-};
-
 // Render result
 void render(SDL_Renderer* renderer, const FlagSpec* f){
     switch (f->type){
-        case FLAG_NORDIC: create_nordic_flag(f, renderer); break;
-        case FLAG_HORIZONTAL: create_horizontal_flag(f, renderer); break;
+        case FLAG_NORDIC:               create_nordic_flag(f, renderer); break;
+        case FLAG_HORIZONTAL:           create_horizontal_flag(f, renderer); break;
         case FLAG_TRICOLOR_VERTICAL: break;
         case FLAG_CENTER_CROSS: break;
         case FLAG_CIRCLE: break;
@@ -28,49 +17,25 @@ void render(SDL_Renderer* renderer, const FlagSpec* f){
 void create_horizontal_flag(const FlagSpec *f, SDL_Renderer *r){
     render_title(f->title, r);
 
+    SDL_Rect bars[f->amount];
+
     const int H = 300;
     const int W = H * 2;
     const int X = (WINDOW_WIDTH  - W) / 2;
     const int Y = (WINDOW_HEIGHT - H) / 2;
-
     
-    // Color of flag bg
-    set_color(r, f->colors[0]);
-    SDL_Rect background = { X, Y, W, H };
-    SDL_RenderFillRect(r, &background);
-    
-    if (f->amount < 3){
+    const int HORIZONTAL_THICKNESS = H / f->amount;
 
-        const int HORIZONTAL_THICKNESS = H / 2;
-        set_color(r, f->colors[1]);
-        SDL_Rect bottom_bar = {
-            X,
-            Y + 150,
-            W,
-            HORIZONTAL_THICKNESS,
-        };
-        SDL_RenderFillRect(r, &bottom_bar);
+    for (size_t i = 0; i < f->amount; i++){
+        set_color(r, f->colors[i]);
 
-    }
-    else {
-        const int HORIZONTAL_THICKNESS = H / 3;
-        set_color(r, f->colors[1]);
-        SDL_Rect middle_bar = {
-            X,
-            Y + 100,
-            W,
-        HORIZONTAL_THICKNESS,
-        };
-        SDL_RenderFillRect(r, &middle_bar);
-    
-        set_color(r, f->colors[2]);
-        SDL_Rect bottom_bar = {
-            X,
-            Y + 200,
-            W,
-            HORIZONTAL_THICKNESS
-        };
-        SDL_RenderFillRect(r, &bottom_bar);
+        // Fill current flag.
+        bars[i].x = X;
+        bars[i].y = Y + HORIZONTAL_THICKNESS * i;
+        bars[i].w = W;
+        bars[i].h = HORIZONTAL_THICKNESS;
+
+        SDL_RenderFillRect(r, &bars[i]);
     }
 }
 
