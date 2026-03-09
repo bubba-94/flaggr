@@ -6,25 +6,11 @@
 
     Make flags fade in/out, “wave,” or highlight a cross dynamically.
 
-    This keeps FlagSpec data-driven while adding visual polish.
-
-    Responsive Layouts
-
     Instead of fixed width/height, compute flag sizes based on window dimensions.
-
-    Makes your engine scale to any screen.
-
-    External Data Loading
 
     Store flag definitions in a file (JSON, CSV, or custom format) and load at runtime.
 
-    This removes the need to recompile when adding flags.
-
-    GUI or Menu Layer
-
     Add a small UI to select flags instead of just arrow keys.
-
-    Prepares your engine for more complex interactions.
 */
 
 int main(void) {
@@ -58,41 +44,35 @@ int main(void) {
 
     while (running){
 
+        clear(App.renderer);
         // Register event
         SDL_Event event;
 
-        while (SDL_PollEvent(&event) || index != len){
-            clear(App.renderer);
+        while (SDL_PollEvent(&event)) {
             switch(event.type){
-                case SDL_QUIT: return 1;
+                case SDL_QUIT:
+                    running = 0;
+                    break;
+
                 case SDL_KEYDOWN:
                     if (event.key.keysym.sym == SDLK_RIGHT){
-                        // If right most go bottom index
-                        if (index == len - 1){
+                        if (index == len - 1)
                             index = 0;
-                            break;
-                        }
-                        if (index < len){
+                        else
                             ++index;
-                        }
                     }
 
                     if (event.key.keysym.sym == SDLK_LEFT){
-                        // If left most go to top index
-                        if (index == 0){
-                            index = len;
-                        }
-                        if (index > 0){
+                        if (index == 0)
+                            index = len - 1;
+                        else
                             --index;
-                        }
                     }
-                 break;
+            break;
             }
-
-            render(App.renderer, &FLAGS[index]);
         }
-    
-        SDL_RenderPresent(App.renderer);
+
+        render(App.renderer, &FLAGS[index]);
     }
 
     printf("Leaving FLAGGRRR!\n");

@@ -9,8 +9,6 @@ void render(SDL_Renderer* renderer, const FlagSpec* f){
         case FLAG_CENTER_CROSS: break;
         case FLAG_CIRCLE: break;
     }
-
-    // Present results
     SDL_RenderPresent(renderer);
 }
 
@@ -142,6 +140,8 @@ void render_title(const char* title, SDL_Renderer *renderer){
       // Create surface with rendered text
     SDL_Color textColor = {255, 255, 255, 255};
     SDL_Surface *textSurface = TTF_RenderUTF8_Solid(font, title, textColor);
+
+    TTF_CloseFont(font);
 
     if (!textSurface) {
         printf("Failed to create text surface: %s\n", TTF_GetError());
