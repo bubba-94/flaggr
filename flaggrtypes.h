@@ -1,10 +1,17 @@
 #ifndef FLAGGRTYPES_H
 #define FLAGGRTYPES_H
 
+// External libraries
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <cjson/cJSON.h>
+
+// C standard libraries
 #include <stdint.h>
 #include <string.h>
+
+#define MAX_COLORS 10
+#define MAX_FLAGS 25
 
 static const uint16_t WINDOW_WIDTH = 1080;
 static const uint16_t WINDOW_HEIGHT = 640;
@@ -53,7 +60,10 @@ typedef enum {
 typedef enum{
     FLAG_NORDIC,
     FLAG_HORIZONTAL,
+    FLAG_TRICOLOR,
     FLAG_TRICOLOR_VERTICAL,
+    FLAG_VERTICAL,
+    FLAG_VERTICAL_STRIPES,
     FLAG_CENTER_CROSS,
     FLAG_CIRCLE
 }FlagType;
@@ -62,7 +72,7 @@ typedef struct{
     const char* title;
     size_t amount;
     FlagType type;
-    ColorId colors[10];
+    ColorId colors[MAX_COLORS];
 }FlagSpec;
 
 static const Color TABLE[] = {

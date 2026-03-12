@@ -5,6 +5,18 @@
 
 Flaggr is just a fun C application where i can print out pre defined flags using bitmaps.
 
+## Dependencies 
+
+- [SDL2]()
+- [cJSON]()
+
+## Extensions
+
+- [x] Config files
+- [] Dynamic window width and height
+- [] Small UI menu
+- [] Better graphics (last)
+
 ## About
 
 This project will help develop my understanding for bits and how they behave.

@@ -1,0 +1,138 @@
+[
+    {
+        "country": "SWEDEN",
+        "amount" : 2,
+        "type" : "nordic",
+        "colors": [
+            "blue", 
+            "yellow"
+        ]
+    },
+    {
+        "country": "NORWAY",
+        "amount": 3,
+        "type": "nordic",
+        "colors": [
+            "red",
+            "white",
+            "blue"
+        ]
+    },
+    {
+        "country": "DENMARK",
+        "amount": 2,
+        "type": "nordic",
+        "colors": [
+            "red",
+            "white"
+        ]
+    },
+    {
+        "country": "FINLAND",
+        "amount": 2,
+        "type": "nordic",
+        "colors": [
+            "white",
+            "blue"
+        ]
+    },
+    {
+        "country": "ICELAND",
+        "amount": 3,
+        "type": "nordic",
+        "colors": [
+            "blue",
+            "white",
+            "red"
+        ]
+    },
+    {
+        "country": "FAROE ISLANDS",
+        "amount": 3,
+        "type": "nordic",
+        "colors": [
+            "white",
+            "red",
+            "blue"
+        ]
+    },
+    {
+        "country": "ESTONIA",
+        "amount": 3,
+        "type": "horizontal",
+        "colors": [
+            "black",
+            "blue",
+            "white"
+        ]
+    },
+    {
+        "country": "LITHUANIA",
+        "amount": 3,
+        "type": "horizontal",
+        "colors": [
+            "dark_yellow",
+            "dark_green",
+            "dark_red"
+        ]
+    },
+    {
+        "country": "GERMANY",
+        "amount": 3,
+        "type": "horizontal",
+        "colors": [
+            "black",
+            "red",
+            "yellow"
+        ]
+    },
+    {
+        "country": "RUSSIA",
+        "amount": 3,
+        "type": "horizontal",
+        "colors": [
+            "white",
+            "blue",
+            "red"
+        ]
+    },
+    {
+        "country": "LUXEMBOURG",
+        "amount": 3,
+        "type": "horizontal",
+        "colors": [
+            "red",
+            "white",
+            "light_blue"
+        ]
+    },
+    {
+        "country": "POLAND",
+        "amount": 2,
+        "type": "horizontal",
+        "colors": [
+            "red",
+            "white"
+        ]
+    },
+    {
+        "country": "HUNGARY",
+        "amount": 3,
+        "type": "horizontal",
+        "colors": [
+            "red",
+            "white",
+            "dark_green"
+        ]
+    },
+    {
+        "country": "Armenia",
+        "amount": 3,
+        "type": "horizontal",
+        "colors": [
+            "red",
+            "blue",
+            "dark_yellow"
+        ]
+    }
+]

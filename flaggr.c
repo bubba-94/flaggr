@@ -5,7 +5,10 @@ void render(SDL_Renderer* renderer, const FlagSpec* f){
     switch (f->type){
         case FLAG_NORDIC:               create_nordic_flag(f, renderer); break;
         case FLAG_HORIZONTAL:           create_horizontal_flag(f, renderer); break;
+        case FLAG_TRICOLOR: break;
         case FLAG_TRICOLOR_VERTICAL: break;
+        case FLAG_VERTICAL: break;
+        case FLAG_VERTICAL_STRIPES: break;
         case FLAG_CENTER_CROSS: break;
         case FLAG_CIRCLE: break;
     }
@@ -108,7 +111,7 @@ uint16_t get_text_x(const char *title){
 
 uint16_t get_text_width(const char *title){
     const int CHAR_WIDTH = 50;
-    const int CHAR_PADDING = 10;
+    const int CHAR_PADDING = 20;
     int len = strlen(title);
 
     if (len == 0) return 0;
@@ -216,4 +219,155 @@ void destroy(App *app) {
         SDL_DestroyWindow(app->window);
 
     SDL_Quit();
+}
+
+int read_config(const char *file, FlagSpec *flags) {
+
+    FILE *fd = fopen(file, "r");
+    if (!fd) {
+        printf("Error opening %s\n", file);
+        return 0;
+    }
+
+    char buffer[10000];
+    size_t len = fread(buffer, 1, sizeof(buffer)-1, fd);
+    buffer[len] = '\0';
+    fclose(fd);
+
+    cJSON *json = cJSON_Parse(buffer);
+    if (!json) {
+        printf("Parse error\n");
+        return 0;
+    }
+
+    if (!cJSON_IsArray(json)) {
+        printf("Root should be array\n");
+        cJSON_Delete(json);
+        return 0;
+    }
+
+    int count = cJSON_GetArraySize(json);
+    int flagsRead = 0;
+
+    for (int i = 0; i < count; i++) {
+
+        cJSON *item = cJSON_GetArrayItem(json, i);
+
+        cJSON *country = cJSON_GetObjectItemCaseSensitive(item, "country");
+        cJSON *amount  = cJSON_GetObjectItemCaseSensitive(item, "amount");
+        cJSON *type    = cJSON_GetObjectItemCaseSensitive(item, "type");
+        cJSON *colors  = cJSON_GetObjectItemCaseSensitive(item, "colors");
+
+        if (cJSON_IsString(country))
+            flags[i].title = strdup(country->valuestring);
+
+        if (cJSON_IsNumber(amount))
+            flags[i].amount = amount->valueint;
+
+        if (cJSON_IsString(type))
+            flags[i].type = typestrToEnum(type->valuestring);
+
+        if (cJSON_IsArray(colors)) {
+
+            size_t colorLen = cJSON_GetArraySize(colors);
+
+            for (size_t j = 0; j < colorLen && j < 10; j++) {
+
+                cJSON *color = cJSON_GetArrayItem(colors, j);
+
+                if (cJSON_IsString(color))
+                    flags[i].colors[j] = colorstrToEnum(color->valuestring);
+            }
+        }
+
+        flagsRead++;
+    }
+
+    cJSON_Delete(json);
+    return flagsRead;
+}
+
+
+// Map type string to enum
+FlagType typestrToEnum(const char* str) {
+
+    switch(str[0]) {
+
+        case 'n':
+            if(strcmp(str,"nordic")==0) return FLAG_NORDIC;
+            break;
+
+        case 'h':
+            if(strcmp(str,"horizontal")==0) return FLAG_HORIZONTAL;
+            break;
+
+        case 'v':
+            if(strcmp(str,"vertical")==0) return FLAG_VERTICAL;
+            if(strcmp(str,"vertical_stripes")==0) return FLAG_VERTICAL_STRIPES;
+            break;
+
+        case 't':
+            if(strcmp(str,"tricolor")==0) return FLAG_TRICOLOR;
+            if(strcmp(str,"tricolorvert")==0) return FLAG_TRICOLOR_VERTICAL;
+            break;
+
+    }
+        return -1; // Error
+}
+
+// Map color string to enum
+ColorId colorstrToEnum(const char* str) {
+
+    switch(str[0]) {
+
+        case 'w':
+            if(strcmp(str,"white")==0) return WHITE;
+            break;
+
+        case 'b':
+            if(strcmp(str,"black")==0) return BLACK;
+            if(strcmp(str,"blue")==0) return BLUE;
+            if(strcmp(str,"brown")==0) return BROWN;
+            break;
+
+        case 'r':
+            if(strcmp(str,"red")==0) return RED;
+            break;
+
+        case 'd':
+            if(strcmp(str,"dark_red")==0) return DARK_RED;
+            if(strcmp(str,"dark_blue")==0) return DARK_BLUE;
+            if(strcmp(str,"dark_green")==0) return DARK_GREEN;
+            if(strcmp(str,"dark_yellow")==0) return DARK_YELLOW;
+            break;
+
+        case 'l':
+            if(strcmp(str,"light_red")==0) return LIGHT_RED;
+            if(strcmp(str,"light_blue")==0) return LIGHT_BLUE;
+            if(strcmp(str,"light_green")==0) return LIGHT_GREEN;
+            break;
+
+        case 'g':
+            if(strcmp(str,"green")==0) return GREEN;
+            if(strcmp(str,"gold")==0) return GOLD;
+            break;
+
+        case 'y':
+            if(strcmp(str,"yellow")==0) return YELLOW;
+            break;
+
+        case 'o':
+            if(strcmp(str,"orange")==0) return ORANGE;
+            break;
+
+        case 'p':
+            if(strcmp(str,"purple")==0) return PURPLE;
+            break;
+
+        case 'c':
+            if(strcmp(str,"cyan")==0) return CYAN;
+            break;
+    }
+
+    return -1;
 }

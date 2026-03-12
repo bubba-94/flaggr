@@ -1,23 +1,34 @@
 #include "flaggr.h"
 #include <stdio.h>
+#include <cjson/cJSON.h>
 
 /*
-    Animation/Effects
+    EXTENSIONS
 
-    Make flags fade in/out, “wave,” or highlight a cross dynamically.
-
-    Instead of fixed width/height, compute flag sizes based on window dimensions.
-
-    Store flag definitions in a file (JSON, CSV, or custom format) and load at runtime.
-
-    Add a small UI to select flags instead of just arrow keys.
+    1. Store flag definitions in a file (JSON, CSV, or custom format) and load at runtime.
+    2. Instead of fixed width/height, compute flag sizes based on window dimensions.
+    3. Add a small UI to select flags instead of just arrow keys.
+    4. Make flags fade in/out, “wave,” or highlight a cross dynamically.
 */
 
-int main(void) {
-    App App = {0};
+int main(int argc, char *argv[]) {
+    
+    if(argc < 2){
+        printf("No config file provided\n");
+        return -1; 
+    }
 
+    App App = {0};
+    static FlagSpec flags[MAX_FLAGS];
     int running = 1;
 
+    // Read file 
+    int count = read_config(argv[1], flags);
+    // Abort if no flags read
+    if (count < 1) return 1;
+
+
+    /*
     // Add flags to this array
     static const FlagSpec FLAGS[] = {
         {"Sweden"       , 2, FLAG_NORDIC,       {BLUE, YELLOW}},
@@ -35,9 +46,9 @@ int main(void) {
         {"Hungary"      , 3, FLAG_HORIZONTAL,   {RED, WHITE, DARK_GREEN}},
         {"Armenia"      , 3, FLAG_HORIZONTAL,   {RED, BLUE, DARK_YELLOW}}
     };
+        */
 
-    size_t len = sizeof(FLAGS) / sizeof(FLAGS[0]);
-    
+    size_t len = count;
     if (!init(&App, "flaggr", WINDOW_WIDTH, WINDOW_HEIGHT)) return 1;
     
     size_t index = 0;
@@ -72,7 +83,7 @@ int main(void) {
             }
         }
 
-        render(App.renderer, &FLAGS[index]);
+        render(App.renderer, &flags[index]);
     }
 
     printf("Leaving FLAGGRRR!\n");
