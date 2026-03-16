@@ -20,6 +20,7 @@ void clear(SDL_Renderer *r);
 
 // Application
 
+void update(SDL_Event event, size_t index, size_t flags);
 int init(App *app, const char *title, int w, int h);
 void destroy(App *app);
 FlagType typestrToEnum(const char* str);

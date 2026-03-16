@@ -169,58 +169,6 @@ void set_color(SDL_Renderer *r, ColorId id)
     SDL_SetRenderDrawColor(r, c.r, c.g, c.b, SDL_ALPHA_OPAQUE);
 }
 
-int init(App *app, const char *title, int w, int h) {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("SDL_Init error: %s\n", SDL_GetError());
-        return 0;
-    }
-
-    if (TTF_Init() < 0){
-        printf("SDL_TTF error: %s\n", SDL_GetError());
-        return 0;
-    }
-
-    app->window = SDL_CreateWindow(
-        title,
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        w, h,
-        SDL_WINDOW_SHOWN
-    );
-
-    if (!app->window) {
-        printf("Window error: %s\n", SDL_GetError());
-        destroy(app);
-        return 0;
-    }
-
-    app->renderer = SDL_CreateRenderer(
-        app->window,
-        -1,
-        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
-    );
-
-    if (!app->renderer) {
-        printf("Renderer error: %s\n", SDL_GetError());
-        destroy(app);
-        return 0;
-    }
-
-    return 1;
-}
-
-void destroy(App *app) {
-    if (app->renderer)
-        SDL_DestroyRenderer(app->renderer);
-
-    TTF_Quit();
-
-    if (app->window)
-        SDL_DestroyWindow(app->window);
-
-    SDL_Quit();
-}
-
 int read_config(const char *file, FlagSpec *flags) {
 
     FILE *fd = fopen(file, "r");
@@ -370,4 +318,56 @@ ColorId colorstrToEnum(const char* str) {
     }
 
     return -1;
+}
+
+int init(App *app, const char *title, int w, int h) {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        printf("SDL_Init error: %s\n", SDL_GetError());
+        return 0;
+    }
+
+    if (TTF_Init() < 0){
+        printf("SDL_TTF error: %s\n", SDL_GetError());
+        return 0;
+    }
+
+    app->window = SDL_CreateWindow(
+        title,
+        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED,
+        w, h,
+        SDL_WINDOW_SHOWN
+    );
+
+    if (!app->window) {
+        printf("Window error: %s\n", SDL_GetError());
+        destroy(app);
+        return 0;
+    }
+
+    app->renderer = SDL_CreateRenderer(
+        app->window,
+        -1,
+        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+    );
+
+    if (!app->renderer) {
+        printf("Renderer error: %s\n", SDL_GetError());
+        destroy(app);
+        return 0;
+    }
+
+    return 1;
+}
+
+void destroy(App *app) {
+    if (app->renderer)
+        SDL_DestroyRenderer(app->renderer);
+
+    TTF_Quit();
+
+    if (app->window)
+        SDL_DestroyWindow(app->window);
+
+    SDL_Quit();
 }
