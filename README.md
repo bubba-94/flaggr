@@ -13,7 +13,7 @@ Flaggr is just a fun C application where i can print out pre defined flags using
 ## Extensions
 
 - [x] Config files
-- [] Dynamic window width and height
+- [x] Dynamic window width and height
 - [] Small UI menu
 - [] Better graphics (last)
 

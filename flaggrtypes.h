@@ -13,8 +13,8 @@
 #define MAX_COLORS 10
 #define MAX_FLAGS 25
 
-static const uint16_t WINDOW_WIDTH = 1080;
-static const uint16_t WINDOW_HEIGHT = 640;
+static const uint16_t WINDOW_WIDTH = 2000;
+static const uint16_t WINDOW_HEIGHT = 1000;
 static const uint16_t DELAY_MS = 500;
 
 typedef struct {

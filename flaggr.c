@@ -20,8 +20,8 @@ void create_horizontal_flag(const FlagSpec *f, SDL_Renderer *r){
 
     SDL_Rect bars[f->amount];
 
-    const int H = 300;
-    const int W = H * 2;
+    const int H = WINDOW_HEIGHT / 2;
+    const int W = WINDOW_WIDTH / 2;
     const int X = (WINDOW_WIDTH  - W) / 2;
     const int Y = (WINDOW_HEIGHT - H) / 2;
     
@@ -44,8 +44,8 @@ void create_nordic_flag(const FlagSpec *f, SDL_Renderer *r){
 
     render_title(f->title, r);
 
-    const int H = 300;
-    const int W = H * 2;
+    const int H = WINDOW_HEIGHT / 2;
+    const int W = WINDOW_WIDTH / 2;
     const int X = (WINDOW_WIDTH  - W) / 2;
     const int Y = (WINDOW_HEIGHT - H) / 2;
     const int CROSS_THICKNESS = H / 5;

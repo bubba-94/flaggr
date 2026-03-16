@@ -6,7 +6,7 @@
     EXTENSIONS
  
     X   1. Store flag definitions in a file (JSON, CSV, or custom format) and load at runtime.
-    2. Instead of fixed width/height, compute flag sizes based on window dimensions.
+    - [x]2. Instead of fixed width/height, compute flag sizes based on window dimensions.
     3. Add a small UI to select flags instead of just arrow keys.
     4. Make flags fade in/out, “wave,” or highlight a cross dynamically.
 */
@@ -25,10 +25,11 @@ int main(int argc, char *argv[]) {
     // Read file config
     int flag_count = read_config(argv[1], flags);
     
-    // Abort if no flags read
-    if (flag_count < 1) return 1;
+    // Abort if no flags read or more than MAX_FLAGS
+    if (flag_count < 1 && flag_count >= MAX_FLAGS) return 1;
 
     size_t len = flag_count;
+
     size_t index = 0;
 
     // Initilize SDL
